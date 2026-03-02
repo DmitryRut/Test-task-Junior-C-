@@ -1,10 +1,10 @@
 #include "LinkedList.h"
 
-LinkedList::LinkedList() { // конструктор
+LinkedList::LinkedList() { // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 	head = tail = nullptr;
 }
 
-LinkedList::~LinkedList() { // деструктор
+LinkedList::~LinkedList() { // РґРµСЃС‚СЂСѓРєС‚РѕСЂ
 	ListNode* node = head;
 	while (head) {
 		head = head->next;
@@ -15,7 +15,7 @@ LinkedList::~LinkedList() { // деструктор
 	size = 0;
 }
 
-void LinkedList::add_node(std::string &str) { // добавление нового элемента в конец списка
+void LinkedList::add_node(std::string &str) { // С„СѓРЅРєС†РёСЏ РґРѕР±Р°РІР»РµРЅРёСЏ СѓР·Р»Р°
 	ListNode* node = new ListNode;
 	node->data = str;
 	if (head == nullptr)
@@ -34,7 +34,7 @@ bool LinkedList::is_empty() const {
 }
 
 void LinkedList::deserial(const std::string &file_in, std::vector<long> &rand_indexes) {
-	// десериализация списка из текстового файла
+	// С‡С‚РµРЅРёРµ СЃРїРёСЃРєР° РёР· С‚РµРєСЃС‚РѕРІРѕРіРѕ С„Р°Р№Р»Р°
 	std::ifstream file(file_in);
 	if (!file.is_open()) {
 		std::cout << "File is not open" << std::endl;
@@ -42,34 +42,34 @@ void LinkedList::deserial(const std::string &file_in, std::vector<long> &rand_in
 	}
 
 	std::string line;
-	std::vector<ListNode*> node_pointers; //вектор указателей на элементы списка
-	//std::vector<long> rand_indexes - вектор индексов rand
+	std::vector<ListNode*> node_pointers; //РІРµРєС‚РѕСЂ СѓРєР°Р·Р°С‚РµР»РµР№ РЅР° СЌР»РµРјРµРЅС‚С‹ СЃРїРёСЃРєР°
+	//std::vector<long> rand_indexes - РІРµРєС‚РѕСЂ РёРЅРґРµРєСЃРѕРІ rand
 
-	while (std::getline(file, line)) { // читаем построчно из файла, формируем список
+	while (std::getline(file, line)) { // РїРѕСЃС‚СЂРѕС‡РЅРѕ СЃС‡РёС‚С‹РІР°РµРј РёР· С„Р°Р№Р»Р°
 		size_t pos = line.find(';');
 		if (pos == std::string::npos) {
 			std::cout << "Format string error: " << line << std::endl;
 			continue;
 		}
-		std::string str = line.substr(0, pos); // парсим строку
+		std::string str = line.substr(0, pos); // РїР°СЂСЃРёРј СЃС‚СЂРѕРєСѓ
 		long index = stoi(line.substr(pos + 1));
-		add_node(str); //добавляем новый элемент в список
-		rand_indexes.push_back(index); // запоминаем индекс rand у данного элемента списка
-		node_pointers.push_back(tail); // добавляем новый указатель в вектор указателей на элементы списка
+		add_node(str); //РґРѕР±Р°РІР»СЏРµРј СѓР·РµР»
+		rand_indexes.push_back(index); // РґРѕР±Р°РІР»СЏРµРј РёРЅРґРµРєСЃ rand РЅРѕРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
+		node_pointers.push_back(tail); // РґРѕР±Р°РІР»СЏРµРј РІ РІРµРєС‚РѕСЂ СѓРєР°Р·Р°С‚РµР»РµР№ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚
 	}
 
 	file.close();
-	for (size_t i = 0; i < node_pointers.size(); i++) { // расставляем указатели rand, когда имеем полное представление о списке
+	for (size_t i = 0; i < node_pointers.size(); i++) { // СЂР°СЃСЃС‚Р°РІР»СЏРµРј СѓРєР°Р·Р°С‚РµР»Рё РЅР° rand 
 		if (rand_indexes[i] <= -1 || rand_indexes[i] >= size) continue;
 		else node_pointers[i]->rand = node_pointers[rand_indexes[i]];
 	}
 } 
 
 void LinkedList::serial(const std::string& file_out, std::vector<long>& rand_indexes) {
-	// сериализация списка в бинарный файл
+	// Р·Р°РїРёСЃСЊ РІ Р±РёРЅР°СЂРЅС‹Р№ С„Р°Р№Р»
 	std::ofstream file(file_out, std::ios::binary);
 	if (!file.is_open()) {
-		std::cout << "Не удалось открыть файл для записи: " << file_out << std::endl;
+		std::cout << "File can not be open: " << file_out << std::endl;
 		return;
 	}
 	if (is_empty()) return;
@@ -84,10 +84,10 @@ void LinkedList::serial(const std::string& file_out, std::vector<long>& rand_ind
 }
 
 void LinkedList::serial2(const std::string& file_out, std::vector<long>& rand_indexes) {
-	// сериализация списка в текстовый файл для проверки
+	// Р·Р°РїРёСЃСЊ РІ С‚РµРєСЃС‚РѕРІС‹Р№ С„Р°Р№Р» РґР»СЏ РїСЂРѕРІРµСЂРєРё
 	std::ofstream file(file_out);
 	if (!file.is_open()) {
-		std::cout << "Не удалось открыть файл для записи: " << file_out << std::endl;
+		std::cout << "File can not be open: " << file_out << std::endl;
 		return;
 	}
 	if (is_empty()) return;
@@ -101,7 +101,7 @@ void LinkedList::serial2(const std::string& file_out, std::vector<long>& rand_in
 	}
 }
 
-void LinkedList::printList() const { // функция печати списка на консоль
+void LinkedList::printList() const { // РїРµС‡Р°С‚СЊ СЃРїРёСЃРєР° РІ РєРѕРЅСЃРѕР»СЊ РґР»СЏ РїСЂРѕРІРµСЂРєРё
 	ListNode* current = head;
 	long index = 0;
 	while (current) {
