@@ -1,0 +1,5 @@
+apple;1 rand data: banana
+banana;-1 rand data: -1
+peach;0 rand data: apple
+12345;2 rand data: peach
+onion;3 rand data: 12345
