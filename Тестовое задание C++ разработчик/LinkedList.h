@@ -5,11 +5,11 @@
 #include <iostream>
 #include <vector>
 
-struct ListNode { // ListNode модифицировать нельзя
-	ListNode* prev = nullptr; // указатель на предыдущий элемент или nullptr
+struct ListNode { 
+	ListNode* prev = nullptr; 
 	ListNode* next = nullptr;
-	ListNode* rand = nullptr; // указатель на произвольный элемент данного списка, либо `nullptr`
-	std::string data; // произвольные пользовательские данные
+	ListNode* rand = nullptr; 
+	std::string data; 
 };
 
 class LinkedList
